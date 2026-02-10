@@ -1,98 +1,516 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Savings App</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS for styling -->
-    <script src="script.js" defer></script> <!-- Link to external JavaScript for functionality -->
+    <title>Tombol Animasi dengan Efek Pecah</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background-color: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #64b5f6;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+        }
+        
+        .description {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+        }
+        
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .buttons-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .btn {
+            position: relative;
+            height: 130px;
+            border: none;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn i {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover i {
+            transform: scale(1.2);
+        }
+        
+        /* Tombol dengan efek pecah seribu (partikel) */
+        .btn-1 {
+            position: relative;
+            overflow: visible;
+        }
+        
+        .btn-1 .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ff6b6b;
+            pointer-events: none;
+            opacity: 0;
+            z-index: -1;
+        }
+        
+        .btn-1:hover .particle {
+            animation: explode 0.6s forwards;
+        }
+        
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        /* Tombol dengan efek pecah out */
+        .btn-2 {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-2::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff6b6b, #ffd166);
+            z-index: -1;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            transition: clip-path 0.5s ease;
+        }
+        
+        .btn-2:hover::before {
+            animation: breakOut 0.5s forwards;
+        }
+        
+        @keyframes breakOut {
+            0% {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            25% {
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 100%);
+            }
+            50% {
+                clip-path: polygon(0 0, 0 0, 100% 100%, 0 100%);
+            }
+            75% {
+                clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+            }
+            100% {
+                clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+            }
+        }
+        
+        /* Tombol dengan efek pecah in */
+        .btn-3 {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-3::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #06d6a0, #118ab2);
+            z-index: -1;
+            clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+            transition: clip-path 0.5s ease;
+        }
+        
+        .btn-3:hover::before {
+            animation: breakIn 0.5s forwards;
+        }
+        
+        @keyframes breakIn {
+            0% {
+                clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+            }
+            25% {
+                clip-path: polygon(25% 25%, 75% 25%, 75% 75%, 25% 75%);
+            }
+            50% {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            75% {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            100% {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+        
+        /* Tombol animasi lainnya */
+        .btn-4:hover {
+            animation: pulse 0.5s infinite alternate;
+            background: linear-gradient(135deg, #A1C4FD, #C2E9FB);
+            color: #333;
+        }
+        
+        .btn-5:hover {
+            animation: shake 0.5s;
+            background: linear-gradient(135deg, #FFECD2, #FCB69F);
+            color: #333;
+        }
+        
+        .btn-6:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #84FAB0, #8FD3F4);
+            color: #333;
+        }
+        
+        .btn-7:hover {
+            border-radius: 50%;
+            background: linear-gradient(135deg, #D4FC79, #96E6A1);
+            color: #333;
+        }
+        
+        .btn-8:hover {
+            animation: rotate 0.8s;
+            background: linear-gradient(135deg, #FDCBF1, #E6DEE9);
+            color: #333;
+        }
+        
+        .btn-9:hover {
+            box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.8);
+            background: linear-gradient(135deg, #A3BFFA, #6991C7);
+            color: white;
+        }
+        
+        .btn-10:hover {
+            animation: bounce 0.8s;
+            background: linear-gradient(135deg, #FFDEE9, #B5FFFC);
+            color: #333;
+        }
+        
+        .btn-11:hover {
+            background: linear-gradient(135deg, #FF9A8B, #FF6A88, #FF99AC);
+            background-size: 200% 200%;
+            animation: gradientShift 1.5s infinite alternate;
+            color: white;
+        }
+        
+        .btn-12:hover {
+            animation: glow 1s infinite alternate;
+            background: linear-gradient(135deg, #F6D365, #FDA085);
+            color: #333;
+        }
+        
+        /* Animasi keyframes untuk efek lainnya */
+        @keyframes pulse {
+            from { transform: translateY(-5px) scale(1); }
+            to { transform: translateY(-5px) scale(1.05); }
+        }
+        
+        @keyframes shake {
+            0% { transform: translateY(-5px) translateX(0); }
+            25% { transform: translateY(-5px) translateX(-5px); }
+            50% { transform: translateY(-5px) translateX(5px); }
+            75% { transform: translateY(-5px) translateX(-5px); }
+            100% { transform: translateY(-5px) translateX(0); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: translateY(-5px) rotate(0deg); }
+            100% { transform: translateY(-5px) rotate(360deg); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(-5px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        @keyframes glow {
+            from { 
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 10px #ffdd40, 0 0 20px #ffdd40; 
+            }
+            to { 
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 20px #ffdd40, 0 0 30px #ffdd40; 
+            }
+        }
+        
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 40px;
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .highlight {
+            color: #64ffda;
+            font-weight: bold;
+        }
+        
+        .effect-label {
+            position: absolute;
+            bottom: 8px;
+            font-size: 0.8rem;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 2px 8px;
+            border-radius: 10px;
+            color: #64ffda;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>My Savings</h1>
-        <div id="balance">Balance: $0.00</div>
-    </header>
-    <main>
-        <section id="transaction-form">
-            <h2>Transaction Management</h2>
-            <form id="form">
-                <input type="text" id="description" placeholder="Transaction Description" required>
-                <input type="number" id="amount" placeholder="Amount" required>
-                <button type="submit">Add Transaction</button>
-            </form>
-            <div id="transactions">
-                <h3>Transaction History</h3>
-                <ul id="transaction-list"></ul>
-            </div>
-        </section>
-        <section id="charts">
-            <h2>Transaction Charts</h2>
-            <canvas id="transactionChart"></canvas>
-        </section>
-    </main>
-    <footer>
-        <p>© 2026 Savings App</p>
-    </footer>
+    <div class="container">
+        <h1>Efek Animasi Tombol Spesial</h1>
+        <div class="subtitle">Dengan Efek "Pecah Seribu", "Pecah Out", dan "Pecah In"</div>
+        
+        <p class="description">12 tombol dengan efek animasi berbeda, termasuk 3 efek spesial "pecah". Arahkan kursor ke tombol untuk melihat efek animasi uniknya. Klik tombol untuk melihat interaksi.</p>
+        
+        <div class="buttons-grid">
+            <!-- Tombol dengan efek pecah seribu (partikel) -->
+            <button class="btn btn-1" id="breakParticleBtn">
+                <i class="fas fa-bomb"></i>
+                <span>Pecah Seribu</span>
+                <div class="effect-label">Partikel</div>
+            </button>
+            
+            <!-- Tombol dengan efek pecah out -->
+            <button class="btn btn-2">
+                <i class="fas fa-external-link-alt"></i>
+                <span>Pecah Out</span>
+                <div class="effect-label">Keluar</div>
+            </button>
+            
+            <!-- Tombol dengan efek pecah in -->
+            <button class="btn btn-3">
+                <i class="fas fa-compress-alt"></i>
+                <span>Pecah In</span>
+                <div class="effect-label">Masuk</div>
+            </button>
+            
+            <!-- Tombol animasi lainnya -->
+            <button class="btn btn-4">
+                <i class="fas fa-heartbeat"></i>
+                <span>Pulse</span>
+            </button>
+            
+            <button class="btn btn-5">
+                <i class="fas fa-shake"></i>
+                <span>Shake</span>
+            </button>
+            
+            <button class="btn btn-6">
+                <i class="fas fa-expand-alt"></i>
+                <span>Scale Up</span>
+            </button>
+            
+            <button class="btn btn-7">
+                <i class="fas fa-circle"></i>
+                <span>Circle</span>
+            </button>
+            
+            <button class="btn btn-8">
+                <i class="fas fa-sync-alt"></i>
+                <span>Rotate</span>
+            </button>
+            
+            <button class="btn btn-9">
+                <i class="fas fa-square"></i>
+                <span>Border In</span>
+            </button>
+            
+            <button class="btn btn-10">
+                <i class="fas fa-basketball-ball"></i>
+                <span>Bounce</span>
+            </button>
+            
+            <button class="btn btn-11">
+                <i class="fas fa-palette"></i>
+                <span>Gradient Shift</span>
+            </button>
+            
+            <button class="btn btn-12">
+                <i class="fas fa-star"></i>
+                <span>Glow</span>
+            </button>
+        </div>
+        
+        <p class="footer">Dibuat dengan <span class="highlight">HTML, CSS, dan JavaScript</span> | 12 efek animasi termasuk 3 efek "pecah" spesial</p>
+    </div>
+
     <script>
-        // Check for offline storage support
-        if (typeof(Storage) !== "undefined") {
-            // Load saved transactions from local storage
-            const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-            updateTransactionList();
-            updateBalance();
-
-            document.getElementById('form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const description = document.getElementById('description').value;
-                const amount = parseFloat(document.getElementById('amount').value);
-                transactions.push({description, amount});
-                localStorage.setItem('transactions', JSON.stringify(transactions));
-                updateTransactionList();
-                updateBalance();
-                drawChart();
-                this.reset();
-            });
-        } else {
-            alert("Sorry, your browser does not support web storage...");
+        // Fungsi untuk membuat partikel efek "pecah seribu"
+        function createParticles(event, button) {
+            // Hapus partikel lama jika ada
+            const oldParticles = button.querySelectorAll('.particle');
+            oldParticles.forEach(particle => particle.remove());
+            
+            // Buat 30 partikel
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Warna acak untuk partikel
+                const colors = ['#ff6b6b', '#ffd166', '#06d6a0', '#118ab2', '#ef476f'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.backgroundColor = randomColor;
+                
+                // Ukuran acak untuk partikel
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Posisi awal partikel (di tengah tombol)
+                const buttonRect = button.getBoundingClientRect();
+                const startX = buttonRect.width / 2;
+                const startY = buttonRect.height / 2;
+                
+                // Posisi akhir acak untuk partikel
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 100 + 50;
+                const endX = Math.cos(angle) * distance;
+                const endY = Math.sin(angle) * distance;
+                
+                // Set posisi awal dan variabel CSS untuk animasi
+                particle.style.left = `${startX}px`;
+                particle.style.top = `${startY}px`;
+                particle.style.setProperty('--tx', `${endX}px`);
+                particle.style.setProperty('--ty', `${endY}px`);
+                
+                // Tambahkan partikel ke tombol
+                button.appendChild(particle);
+            }
+            
+            // Hapus partikel setelah animasi selesai
+            setTimeout(() => {
+                const particles = button.querySelectorAll('.particle');
+                particles.forEach(particle => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                });
+            }, 600);
         }
-
-        function updateTransactionList() {
-            const list = document.getElementById('transaction-list');
-            list.innerHTML = '';
-            transactions.forEach((transaction, index) => {
-                const li = document.createElement('li');
-                li.textContent = `${transaction.description}: $${transaction.amount.toFixed(2)}`;
-                list.appendChild(li);
-            });
-        }
-
-        function updateBalance() {
-            const balance = transactions.reduce((sum, t) => sum + t.amount, 0);
-            document.getElementById('balance').textContent = `Balance: $${balance.toFixed(2)}`;
-        }
-
-        function drawChart() {
-            const ctx = document.getElementById('transactionChart').getContext('2d');
-            const labels = transactions.map((t) => t.description);
-            const data = transactions.map((t) => t.amount);
-
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Transactions',
-                        data: data,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
+        
+        // Tambahkan event listener untuk semua tombol
+        document.querySelectorAll('.btn').forEach(button => {
+            // Efek hover untuk tombol pecah seribu
+            if (button.classList.contains('btn-1')) {
+                button.addEventListener('mouseenter', (e) => {
+                    createParticles(e, button);
+                });
+            }
+            
+            // Efek klik untuk semua tombol
+            button.addEventListener('click', function(e) {
+                // Efek klik ringan
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
+                // Untuk tombol pecah seribu, tambahkan efek klik juga
+                if (this.classList.contains('btn-1')) {
+                    createParticles(e, this);
                 }
+                
+                // Dapatkan teks tombol
+                const buttonText = this.querySelector('span').textContent;
+                alert(`Anda mengklik tombol: ${buttonText}`);
             });
-        }
+        });
+        
+        // Tambahkan beberapa partikel awal untuk tombol pecah seribu
+        const breakParticleBtn = document.querySelector('.btn-1');
+        setTimeout(() => {
+            // Simulasikan hover untuk menunjukkan efek
+            const event = new MouseEvent('mouseenter');
+            breakParticleBtn.dispatchEvent(event);
+        }, 1000);
     </script>
 </body>
 </html>
