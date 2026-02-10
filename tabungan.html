@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings App</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS for styling -->
+    <script src="script.js" defer></script> <!-- Link to external JavaScript for functionality -->
+</head>
+<body>
+    <header>
+        <h1>My Savings</h1>
+        <div id="balance">Balance: $0.00</div>
+    </header>
+    <main>
+        <section id="transaction-form">
+            <h2>Transaction Management</h2>
+            <form id="form">
+                <input type="text" id="description" placeholder="Transaction Description" required>
+                <input type="number" id="amount" placeholder="Amount" required>
+                <button type="submit">Add Transaction</button>
+            </form>
+            <div id="transactions">
+                <h3>Transaction History</h3>
+                <ul id="transaction-list"></ul>
+            </div>
+        </section>
+        <section id="charts">
+            <h2>Transaction Charts</h2>
+            <canvas id="transactionChart"></canvas>
+        </section>
+    </main>
+    <footer>
+        <p>© 2026 Savings App</p>
+    </footer>
+    <script>
+        // Check for offline storage support
+        if (typeof(Storage) !== "undefined") {
+            // Load saved transactions from local storage
+            const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            updateTransactionList();
+            updateBalance();
+
+            document.getElementById('form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const description = document.getElementById('description').value;
+                const amount = parseFloat(document.getElementById('amount').value);
+                transactions.push({description, amount});
+                localStorage.setItem('transactions', JSON.stringify(transactions));
+                updateTransactionList();
+                updateBalance();
+                drawChart();
+                this.reset();
+            });
+        } else {
+            alert("Sorry, your browser does not support web storage...");
+        }
+
+        function updateTransactionList() {
+            const list = document.getElementById('transaction-list');
+            list.innerHTML = '';
+            transactions.forEach((transaction, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${transaction.description}: $${transaction.amount.toFixed(2)}`;
+                list.appendChild(li);
+            });
+        }
+
+        function updateBalance() {
+            const balance = transactions.reduce((sum, t) => sum + t.amount, 0);
+            document.getElementById('balance').textContent = `Balance: $${balance.toFixed(2)}`;
+        }
+
+        function drawChart() {
+            const ctx = document.getElementById('transactionChart').getContext('2d');
+            const labels = transactions.map((t) => t.description);
+            const data = transactions.map((t) => t.amount);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Transactions',
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                }
+            });
+        }
+    </script>
+</body>
+</html>
